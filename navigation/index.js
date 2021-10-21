@@ -9,7 +9,7 @@ function MyStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        options={{title: 'Note App!'}}
+        options={{headerShown: false}}
         name="Home"
         component={home}
       />

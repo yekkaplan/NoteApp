@@ -11,6 +11,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {COLORS} from '../constants';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 const Notes = props => {
   const navigation = useNavigation();
   return (
@@ -27,7 +28,7 @@ const Notes = props => {
                 styles.content,
                 item.id % 2 == 0
                   ? {backgroundColor: COLORS.primary}
-                  : {backgroundColor: COLORS.secondary},
+                  : {backgroundColor: COLORS.primary},
               ]}>
               <Text style={styles.dateText}>{item.date}</Text>
 
@@ -68,18 +69,18 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   contentText: {
-    color: 'white',
+    color: COLORS.black,
     fontWeight: '400',
   },
   titleText: {
-    color: 'white',
+    color: COLORS.black,
     fontWeight: '600',
     textAlign: 'center',
     marginBottom: 4,
     marginTop: 4,
   },
   dateText: {
-    color: 'white',
+    color: COLORS.black,
     fontWeight: '300',
     textAlign: 'right',
     marginBottom: 4,

@@ -14,6 +14,7 @@ import {COLORS, icons} from '../constants';
 import Dialog from 'react-native-dialog';
 import {connect} from 'react-redux';
 import {addNote} from '../actions/action';
+import images from '../constants/images';
 const Home = props => {
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState();
@@ -38,8 +39,6 @@ const Home = props => {
         note: note,
         date: getCurrentDate(),
       };
-
-      console.info('asdasdasd');
       props.addNote(newNote);
 
       setVisible(false);
@@ -51,6 +50,30 @@ const Home = props => {
   };
   return (
     <View style={styles.container}>
+      <View style={styles.appBar}>
+        <Image
+          source={icons.exit}
+          resizeMode="contain"
+          style={{
+            width: 32,
+            height: 32,
+            alignContent: 'center',
+          }}
+        />
+        <Text
+          style={{fontSize: 20, color: COLORS.black, alignContent: 'center'}}>
+          En Harika Notları Oluşturun!
+        </Text>
+        <Image
+          source={images.logo}
+          resizeMode="contain"
+          style={{
+            width: 64,
+            height: 64,
+            alignContent: 'center',
+          }}
+        />
+      </View>
       <Notes noteList={props.notes} />
       <TouchableOpacity onPress={showInputAlert} style={styles.button}>
         <Image
@@ -95,6 +118,16 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     backgroundColor: COLORS.backgraound,
     paddingHorizontal: 4,
+  },
+  appBar: {
+    width: '100%',
+    height: '10%',
+    paddingLeft: 8,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    backgroundColor: COLORS.backgraound,
   },
   title: {
     margin: 8,
