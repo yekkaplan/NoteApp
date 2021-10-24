@@ -8,7 +8,7 @@ import {
   Image,
 } from 'react-native';
 import {getCurrentDate} from '../utils/utils';
-
+import {addData} from '../service/db';
 import Notes from './notes';
 import {COLORS, icons} from '../constants';
 import Dialog from 'react-native-dialog';
@@ -32,6 +32,8 @@ const Home = props => {
     ToastAndroid.show('Alanlar boş olamaz.', ToastAndroid.SHORT);
   };
   const handleAdd = () => {
+    addData();
+
     if (title != '' && note != '') {
       var newNote = {
         id: props.notes.length + 1,
