@@ -4,7 +4,7 @@ const db = openDatabase({
   name: 'note_db',
 });
 
-const addNoteInDb = payload => {
+const addNoteInDb = async payload => {
   db.transaction(txn => {
     txn.executeSql(
       'INSERT INTO notes (title,note,date) VALUES (?,?,?)',
@@ -21,7 +21,7 @@ const addNoteInDb = payload => {
   });
 };
 
-const getNotes = payload => {
+const getNotes = async payload => {
   let temp = [];
   db.transaction(tx => {
     tx.executeSql('SELECT * FROM notes', [], (tx, results) => {
@@ -35,7 +35,7 @@ const getNotes = payload => {
   return temp;
 };
 
-const deleteNote = payload => {
+const deleteNote = async payload => {
   let isDelete = false;
 
   console.info(payload);

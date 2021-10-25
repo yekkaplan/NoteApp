@@ -9,23 +9,26 @@ import {addNoteInDb, getNotes, deleteNote} from '../service/db';
 
 const INITIAL_STATE = {
   selectedNote: [],
-  notes: getNotes(),
+  notes: [],
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ADD_NOTE:
       addNoteInDb(action.payload);
-      var res = await getNotes();
+      var res = getNotes();
+
+      console.info(res);
       state.notes = res;
+      console.info(state.notes);
       return {...state};
     case GET_NOTES:
-      var res = await getNotes();
+      var res = getNotes();
       state.notes = res;
       return {...state};
     case DELETE_NOTE:
       deleteNote(action.payload);
-      var res = await getNotes();
+      var res = getNotes();
       state.notes = res;
       return {...state};
     case EDIT_NOTE:

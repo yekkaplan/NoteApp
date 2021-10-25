@@ -14,12 +14,16 @@ import Dialog from 'react-native-dialog';
 import {connect} from 'react-redux';
 import {addNote, getNote} from '../actions/action';
 import images from '../constants/images';
-import {openDatabase} from 'react-native-sqlite-storage';
-
-const db = openDatabase({
-  name: 'note_db',
-});
-
+import sqlite, {openDatabase} from 'react-native-sqlite-storage';
+sqlite.enablePromise(true);
+const db = await sqlite
+  .openDatabase({name: 'note.db'})
+  .then(DB => {
+    that.db = DB;
+  })
+  .catch(error => {
+    console.log(error);
+  });
 const Home = props => {
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState();
@@ -58,7 +62,6 @@ const Home = props => {
   const handleAdd = () => {
     if (title != '' && note != '') {
       var newNote = {
-        id: props.notes.length + 1,
         title: title,
         note: note,
         date: getCurrentDate(),

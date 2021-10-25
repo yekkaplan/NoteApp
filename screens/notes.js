@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import {
   StyleSheet,
   View,
@@ -35,9 +35,7 @@ const Notes = props => {
               <Text style={styles.titleText}>{item.title}</Text>
 
               <TouchableOpacity
-                onLongPress={() => {
-                  props.deleteNote(item);
-                }}
+                onLongPress={() => {}}
                 onPress={() => {
                   console.info('test'),
                     navigation.navigate('NoteDetail', {note: item});
@@ -92,8 +90,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 });
-const mapStateToProps = state => {
-  return {noteList: state.noteList};
-};
 
-export default connect(mapStateToProps, {deleteNote})(Notes);
+export default Notes;
