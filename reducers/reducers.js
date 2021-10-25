@@ -5,76 +5,29 @@ import {
   DELETE_NOTE,
   EDIT_NOTE,
 } from '../constants/app-constants';
+import {addNoteInDb, getNotes, deleteNote} from '../service/db';
 
 const INITIAL_STATE = {
   selectedNote: [],
-  notes: [
-    {
-      id: 1,
-      title: 'Lorem',
-      note: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-      date: '06.10.2021',
-    },
-    {
-      id: 2,
-      title: 'Lorem',
-      note: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-      date: '06.10.2021',
-    },
-    {
-      id: 3,
-      title: 'Lorem',
-      note: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-      date: '06.10.2021',
-    },
-    {
-      id: 4,
-      title: 'Lorem',
-      note: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-      date: '06.10.2021',
-    },
-    {
-      id: 5,
-      title: 'Lorem',
-      note: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-      date: '06.10.2021',
-    },
-    {
-      id: 6,
-      title: 'Lorem',
-      note: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-      date: '06.10.2021',
-    },
-    {
-      id: 7,
-      title: 'Lorem',
-      note: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-      date: '06.10.2021',
-    },
-    {
-      id: 8,
-      title: 'Lorem',
-      note: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-      date: '06.10.2021',
-    },
-    {
-      id: 9,
-      title: 'Lorem',
-      note: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-      date: '06.10.2021',
-    },
-  ],
+  notes: getNotes(),
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ADD_NOTE:
-      state.notes.push(action.payload);
+      addNoteInDb(action.payload);
+      var res = await getNotes();
+      state.notes = res;
       return {...state};
     case GET_NOTES:
-      return;
+      var res = await getNotes();
+      state.notes = res;
+      return {...state};
     case DELETE_NOTE:
-      return;
+      deleteNote(action.payload);
+      var res = await getNotes();
+      state.notes = res;
+      return {...state};
     case EDIT_NOTE:
       console.info(action.payload);
       const objIndex = state.notes.findIndex(

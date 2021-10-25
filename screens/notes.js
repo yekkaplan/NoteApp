@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-
+import {connect} from 'react-redux';
 import {
   StyleSheet,
   View,
@@ -11,7 +11,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {COLORS} from '../constants';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {deleteNote} from '../actions/action';
 const Notes = props => {
   const navigation = useNavigation();
   return (
@@ -35,6 +35,9 @@ const Notes = props => {
               <Text style={styles.titleText}>{item.title}</Text>
 
               <TouchableOpacity
+                onLongPress={() => {
+                  props.deleteNote(item);
+                }}
                 onPress={() => {
                   console.info('test'),
                     navigation.navigate('NoteDetail', {note: item});
@@ -89,5 +92,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 });
+const mapStateToProps = state => {
+  return {noteList: state.noteList};
+};
 
-export default Notes;
+export default connect(mapStateToProps, {deleteNote})(Notes);

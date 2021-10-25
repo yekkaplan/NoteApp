@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,17 +8,41 @@ import {
   Image,
 } from 'react-native';
 import {getCurrentDate} from '../utils/utils';
-import {addData} from '../service/db';
 import Notes from './notes';
 import {COLORS, icons} from '../constants';
 import Dialog from 'react-native-dialog';
 import {connect} from 'react-redux';
-import {addNote} from '../actions/action';
+import {addNote, getNote} from '../actions/action';
 import images from '../constants/images';
+import {openDatabase} from 'react-native-sqlite-storage';
+
+const db = openDatabase({
+  name: 'note_db',
+});
+
 const Home = props => {
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState();
   const [note, setNote] = useState();
+
+  const createTables = () => {
+    db.transaction(txn => {
+      txn.executeSql(
+        `CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR(500) , note VARCHAR(500), date VARCHAR(100))`,
+        [],
+        (sqlTxn, res) => {
+          console.log('table created successfully');
+        },
+        error => {
+          console.log('error on creating table ' + error.message);
+        },
+      );
+    });
+  };
+
+  useEffect(() => {
+    createTables();
+  });
 
   const showInputAlert = () => {
     setVisible(true);
@@ -32,8 +56,6 @@ const Home = props => {
     ToastAndroid.show('Alanlar boş olamaz.', ToastAndroid.SHORT);
   };
   const handleAdd = () => {
-    addData();
-
     if (title != '' && note != '') {
       var newNote = {
         id: props.notes.length + 1,
@@ -159,5 +181,9 @@ const mapStateToProps = state => {
     notes: state.notes,
   };
 };
+const mapDispatchToProps = dispatch => ({
+  addNote: () => addNote(),
+  getNote: () => getNote(),
+});
 
 export default connect(mapStateToProps, {addNote})(Home);

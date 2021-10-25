@@ -11,3 +11,10 @@ export const addNote = note => dispatch => {
 export const editNote = note => dispatch => {
   dispatch({type: EDIT_NOTE, payload: note});
 };
+export const getNote = () => dispatch => {
+  dispatch({type: GET_NOTES});
+};
+
+export const deleteNote = note => dispatch => {
+  dispatch({type: DELETE_NOTE, payload: note});
+};
