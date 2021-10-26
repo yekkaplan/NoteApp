@@ -23,6 +23,8 @@ cd NoteApp
 npm i
 npx react-native run-android
 ```
-
+## LICENSE
+MIT
 
 ### Happy coding! by yek :)
+
