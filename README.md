@@ -4,7 +4,7 @@
 
 This application was developed with React Native. There is an infrastructure for the use of "REDUX", "REDUX THUNK", "SQLITE" libraries together.
 ## Packages used;
-- 
+
 - redux
 - react-native-sqlite-storage
 - redux-thunk
