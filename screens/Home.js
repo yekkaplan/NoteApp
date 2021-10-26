@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
-  StyleSheet,
+  homeStylesheet,
   Text,
   TouchableOpacity,
   ToastAndroid,
@@ -14,39 +14,18 @@ import Dialog from 'react-native-dialog';
 import {connect} from 'react-redux';
 import {addNote, getNote} from '../actions/action';
 import images from '../constants/images';
-import sqlite, {openDatabase} from 'react-native-sqlite-storage';
-sqlite.enablePromise(true);
-const db = await sqlite
-  .openDatabase({name: 'note.db'})
-  .then(DB => {
-    that.db = DB;
-  })
-  .catch(error => {
-    console.log(error);
-  });
+import {homeStyles} from './styles/styles';
+
 const Home = props => {
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState();
   const [note, setNote] = useState();
 
-  const createTables = () => {
-    db.transaction(txn => {
-      txn.executeSql(
-        `CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR(500) , note VARCHAR(500), date VARCHAR(100))`,
-        [],
-        (sqlTxn, res) => {
-          console.log('table created successfully');
-        },
-        error => {
-          console.log('error on creating table ' + error.message);
-        },
-      );
-    });
-  };
-
   useEffect(() => {
-    createTables();
-  });
+    props.getNote();
+
+    console.info(props.notes);
+  }, []);
 
   const showInputAlert = () => {
     setVisible(true);
@@ -76,8 +55,8 @@ const Home = props => {
     }
   };
   return (
-    <View style={styles.container}>
-      <View style={styles.appBar}>
+    <View style={homeStyles.container}>
+      <View style={homeStyles.appBar}>
         <Image
           source={icons.exit}
           resizeMode="contain"
@@ -102,7 +81,7 @@ const Home = props => {
         />
       </View>
       <Notes noteList={props.notes} />
-      <TouchableOpacity onPress={showInputAlert} style={styles.button}>
+      <TouchableOpacity onPress={showInputAlert} style={homeStyles.button}>
         <Image
           source={icons.plus}
           resizeMode="contain"
@@ -138,55 +117,10 @@ const Home = props => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingVertical: 4,
-    backgroundColor: COLORS.backgraound,
-    paddingHorizontal: 4,
-  },
-  appBar: {
-    width: '100%',
-    height: '10%',
-    paddingLeft: 8,
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    backgroundColor: COLORS.backgraound,
-  },
-  title: {
-    margin: 8,
-  },
-  titleText: {
-    fontWeight: '700',
-    fontSize: 22,
-    color: COLORS.accent,
-  },
-  button: {
-    borderWidth: 1,
-    borderColor: COLORS.accent,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 70,
-    position: 'absolute',
-    bottom: 10,
-    right: 10,
-    height: 70,
-    backgroundColor: COLORS.accent,
-    borderRadius: 100,
-  },
-});
-
 const mapStateToProps = state => {
   return {
     notes: state.notes,
   };
 };
-const mapDispatchToProps = dispatch => ({
-  addNote: () => addNote(),
-  getNote: () => getNote(),
-});
 
-export default connect(mapStateToProps, {addNote})(Home);
+export default connect(mapStateToProps, {addNote, getNote})(Home);

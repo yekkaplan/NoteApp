@@ -1,11 +1,11 @@
-import {act} from 'react-test-renderer';
 import {
   ADD_NOTE,
   GET_NOTES,
   DELETE_NOTE,
   EDIT_NOTE,
 } from '../constants/app-constants';
-import {addNoteInDb, getNotes, deleteNote} from '../service/db';
+import BaseManager from '../service/base_manager';
+var manager = new BaseManager();
 
 const INITIAL_STATE = {
   selectedNote: [],
@@ -15,40 +15,14 @@ const INITIAL_STATE = {
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ADD_NOTE:
-      addNoteInDb(action.payload);
-      var res = getNotes();
-
-      console.info(res);
-      state.notes = res;
-      console.info(state.notes);
-      return {...state};
+      console.info(' reducer! ' + action.payload);
+      return {...state, notes: action.payload};
     case GET_NOTES:
-      var res = getNotes();
-      state.notes = res;
-      return {...state};
+      return {...state, notes: action.payload};
     case DELETE_NOTE:
-      deleteNote(action.payload);
-      var res = getNotes();
-      state.notes = res;
-      return {...state};
+      return {...state, notes: action.payload};
     case EDIT_NOTE:
-      console.info(action.payload);
-      const objIndex = state.notes.findIndex(
-        obj => obj.id === action.payload.id,
-      );
-      const updateObj = {
-        ...state.notes[objIndex],
-        title: action.payload.title,
-        note: action.payload.note,
-      };
-      const newNotes = [
-        ...state.notes.slice(0, objIndex),
-        updateObj,
-        ...state.notes.slice(objIndex + 1),
-      ];
-      state.notes = newNotes;
-
-      return {...state};
+      return {...state, notes: action.payload};
     default:
       return state;
   }

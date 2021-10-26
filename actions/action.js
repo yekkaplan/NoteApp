@@ -4,17 +4,29 @@ import {
   EDIT_NOTE,
   GET_NOTES,
 } from '../constants/app-constants';
+import BaseManager from '../service/base_manager';
 
-export const addNote = note => dispatch => {
-  dispatch({type: ADD_NOTE, payload: note});
+var manager = new BaseManager();
+
+export const addNote = note => async dispatch => {
+  var res = await manager.addTable(note);
+
+  dispatch({type: ADD_NOTE, payload: res});
 };
-export const editNote = note => dispatch => {
-  dispatch({type: EDIT_NOTE, payload: note});
+export const editNote = note => async dispatch => {
+  var res = await manager.editNote(note);
+  dispatch({type: EDIT_NOTE, payload: res});
 };
-export const getNote = () => dispatch => {
-  dispatch({type: GET_NOTES});
+export const getNote = () => async dispatch => {
+  var result = await manager.getTable();
+
+  console.info(result);
+  dispatch({type: GET_NOTES, payload: result});
 };
 
-export const deleteNote = note => dispatch => {
-  dispatch({type: DELETE_NOTE, payload: note});
+export const deleteNote = note => async dispatch => {
+  console.info(note);
+  var result = await manager.deleteTable(note.id);
+
+  dispatch({type: DELETE_NOTE, payload: result});
 };

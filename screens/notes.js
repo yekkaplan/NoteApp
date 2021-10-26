@@ -1,46 +1,61 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {connect, useSelector} from 'react-redux';
 import {
-  StyleSheet,
   View,
   Text,
   SafeAreaView,
   FlatList,
   TouchableOpacity,
   ScrollView,
+  Image,
 } from 'react-native';
 import {COLORS} from '../constants';
+import {connect, useSelector} from 'react-redux';
 import {deleteNote} from '../actions/action';
+import {icons} from '../constants';
+import {noteItemStyles} from './styles/styles';
 const Notes = props => {
+  var notes = useSelector(state => state.notes);
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={noteItemStyles.container}>
       <ScrollView>
         <FlatList
-          data={props.noteList}
+          data={notes}
           renderItem={({item}) => (
             <View
               onPress={() => {
                 console.info('test'), navigation.navigate('NoteDetail');
               }}
               style={[
-                styles.content,
+                noteItemStyles.content,
                 item.id % 2 == 0
                   ? {backgroundColor: COLORS.primary}
                   : {backgroundColor: COLORS.primary},
               ]}>
-              <Text style={styles.dateText}>{item.date}</Text>
-
-              <Text style={styles.titleText}>{item.title}</Text>
+              <View style={noteItemStyles.titleRow}>
+                <Text style={noteItemStyles.dateText}>{item.date}</Text>
+                <Image
+                  source={icons.hashtag}
+                  resizeMode="contain"
+                  style={{
+                    width: 16,
+                    height: 16,
+                    alignContent: 'center',
+                  }}
+                />
+              </View>
+              <Text style={noteItemStyles.titleText}>{item.title}</Text>
 
               <TouchableOpacity
-                onLongPress={() => {}}
+                onLongPress={() => {
+                  props.deleteNote(item);
+                }}
                 onPress={() => {
                   console.info('test'),
                     navigation.navigate('NoteDetail', {note: item});
                 }}>
-                <Text style={styles.contentText}>{item.note}</Text>
+                <Text style={noteItemStyles.contentText}>{item.note}</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -53,42 +68,10 @@ const Notes = props => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexGrow: 1,
-    justifyContent: 'center',
-    backgroundColor: COLORS.backgraound,
-  },
-  content: {
-    paddingLeft: 8,
-    paddingRight: 8,
-    paddingBottom: 8,
-    flex: 1,
-    borderRadius: 8,
-    margin: 2,
-    flexDirection: 'column',
-  },
-  contentText: {
-    color: COLORS.black,
-    fontWeight: '400',
-  },
-  titleText: {
-    color: COLORS.black,
-    fontWeight: '600',
-    textAlign: 'center',
-    marginBottom: 4,
-    marginTop: 4,
-  },
-  dateText: {
-    color: COLORS.black,
-    fontWeight: '300',
-    textAlign: 'right',
-    marginBottom: 4,
-    marginTop: 4,
-    marginRight: 4,
-    fontSize: 12,
-  },
-});
+const mapStateToProps = state => {
+  return {
+    notes: state.notes,
+  };
+};
 
-export default Notes;
+export default connect(mapStateToProps, {deleteNote})(Notes);

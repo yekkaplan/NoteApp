@@ -1,8 +1,14 @@
 import React from 'react';
-import {View, TextInput, StyleSheet} from 'react-native';
+import {
+  View,
+  TextInput,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import {connect} from 'react-redux';
 import {editNote} from '../actions/action';
-
+import {notDetailStyles} from './styles/styles';
 const NoteDetail = props => {
   var [text, onChangeText] = React.useState(props.route.params.note.note);
   var note = props.route.params.note;
@@ -10,13 +16,16 @@ const NoteDetail = props => {
   const stateChangeText = value => {
     onChangeText(value);
     note.note = text;
+  };
+
+  const updateNote = payload => {
     props.editNote(note);
   };
 
   return (
-    <View style={style.container}>
+    <View style={notDetailStyles.container}>
       <TextInput
-        style={style.noteText}
+        style={notDetailStyles.noteText}
         value={text}
         onChangeText={stateChangeText}
         editable
@@ -24,18 +33,13 @@ const NoteDetail = props => {
         multiline={true}
         maxLength={9999}
       />
+
+      <TouchableOpacity onPress={updateNote} style={notDetailStyles.button}>
+        <Text style={notDetailStyles.buttonText}>Güncelle</Text>
+      </TouchableOpacity>
     </View>
   );
 };
-
-const style = StyleSheet.create({
-  container: {
-    padding: 16,
-    flex: 1,
-    backgroundColor: '#F9DEC9',
-  },
-  noteText: {fontWeight: '600', color: 'black'},
-});
 
 const mapStateToProps = state => {
   return {
