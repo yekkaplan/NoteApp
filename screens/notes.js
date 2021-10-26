@@ -24,9 +24,7 @@ const Notes = props => {
           data={notes}
           renderItem={({item}) => (
             <View
-              onPress={() => {
-                console.info('test'), navigation.navigate('NoteDetail');
-              }}
+              onPress={() => {}}
               style={[
                 noteItemStyles.content,
                 item.id % 2 == 0
@@ -52,8 +50,7 @@ const Notes = props => {
                   props.deleteNote(item);
                 }}
                 onPress={() => {
-                  console.info('test'),
-                    navigation.navigate('NoteDetail', {note: item});
+                  navigation.navigate('NoteDetail', {note: item});
                 }}>
                 <Text style={noteItemStyles.contentText}>{item.note}</Text>
               </TouchableOpacity>

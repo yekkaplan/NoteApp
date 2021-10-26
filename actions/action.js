@@ -19,13 +19,10 @@ export const editNote = note => async dispatch => {
 };
 export const getNote = () => async dispatch => {
   var result = await manager.getTable();
-
-  console.info(result);
   dispatch({type: GET_NOTES, payload: result});
 };
 
 export const deleteNote = note => async dispatch => {
-  console.info(note);
   var result = await manager.deleteTable(note.id);
 
   dispatch({type: DELETE_NOTE, payload: result});

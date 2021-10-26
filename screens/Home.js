@@ -23,8 +23,6 @@ const Home = props => {
 
   useEffect(() => {
     props.getNote();
-
-    console.info(props.notes);
   }, []);
 
   const showInputAlert = () => {

@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  TextInput,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import {View, TextInput, Text, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import {editNote} from '../actions/action';
 import {notDetailStyles} from './styles/styles';

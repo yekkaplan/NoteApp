@@ -5,6 +5,10 @@ import NoteDetail from '../screens/note-detail';
 
 const Stack = createStackNavigator();
 
+/**
+ * for global navigation management.
+ * @returns
+ */
 function MyStack() {
   return (
     <Stack.Navigator>

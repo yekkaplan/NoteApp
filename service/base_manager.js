@@ -15,9 +15,7 @@ export default class BaseManager {
           .executeSql(
             'CREATE TABLE IF NOT EXISTS note (id INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR(500) , note VARCHAR(500), date VARCHAR(100))',
           )
-          .then(val => {
-            console.info('table Created!');
-          })
+          .then(val => {})
           .catch(err => {
             console.log(err);
             reject(false);
@@ -48,8 +46,6 @@ export default class BaseManager {
           [payload.title, payload.note, payload.date, payload.id],
           (sqlTxn, res) => {
             console.log('${payload} update sucess!');
-
-            console.info(payload.title);
           },
           error => {
             console.log('error update note!' + error.message);
@@ -84,14 +80,8 @@ export default class BaseManager {
         .executeSql(
           'INSERT INTO note (title,note,date) VALUES (?,?,?)',
           [payload.title, payload.note, payload.date],
-          (sqlTxn, res) => {
-            console.log('${payload} added sucess!');
-
-            console.info(payload.title);
-          },
-          error => {
-            console.log('error adding note!' + error.message);
-          },
+          (sqlTxn, res) => {},
+          error => {},
         )
         .then(val => {
           resolve(true);
@@ -123,14 +113,8 @@ export default class BaseManager {
         .executeSql(
           'Delete from note where id = (?)',
           [payload],
-          (sqlTxn, res) => {
-            console.log('${payload} delete sucess!');
-
-            console.info(payload.title);
-          },
-          error => {
-            console.log('error adding note!' + error.message);
-          },
+          (sqlTxn, res) => {},
+          error => {},
         )
         .then(val => {
           resolve(true);
