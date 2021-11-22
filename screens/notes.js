@@ -14,6 +14,11 @@ import {connect, useSelector} from 'react-redux';
 import {deleteNote} from '../actions/action';
 import {icons} from '../constants';
 import {noteItemStyles} from './styles/styles';
+/**
+ *
+ * @param {Object} props - included state method and object
+ * @returns
+ */
 const Notes = props => {
   var notes = useSelector(state => state.notes);
   const navigation = useNavigation();
@@ -36,11 +41,7 @@ const Notes = props => {
                 <Image
                   source={icons.hashtag}
                   resizeMode="contain"
-                  style={{
-                    width: 16,
-                    height: 16,
-                    alignContent: 'center',
-                  }}
+                  style={noteItemStyles.noteIcon}
                 />
               </View>
               <Text style={noteItemStyles.titleText}>{item.title}</Text>
@@ -64,7 +65,11 @@ const Notes = props => {
     </SafeAreaView>
   );
 };
-
+/**
+ *
+ * @param {Object} state - include notes and methods
+ * @returns
+ */
 const mapStateToProps = state => {
   return {
     notes: state.notes,

@@ -10,6 +10,12 @@ const INITIAL_STATE = {
   notes: [],
 };
 
+/**
+ *
+ * @param {Object} state - Contains current state information and initial state
+ * @param {*} action - included redux action
+ * @returns
+ */
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ADD_NOTE:

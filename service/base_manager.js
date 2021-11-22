@@ -1,5 +1,13 @@
+/* eslint-disable no-unused-vars */
 import SQLite from 'react-native-sqlite-storage';
+
+/**
+ * This class sqlite base class
+ */
 export default class BaseManager {
+  /**
+   * inital constructor for sqlite object
+   */
   constructor() {
     this.sqlite = SQLite;
     this.sqlite.DEBUG(true);
@@ -18,11 +26,16 @@ export default class BaseManager {
           .then(val => {})
           .catch(err => {
             console.log(err);
+            // eslint-disable-next-line no-undef
             reject(false);
           });
       });
   }
 
+  /**
+   *
+   * @returns create table
+   */
   createTable() {
     return new Promise((resolve, reject) => {
       this.dbInstance
@@ -38,6 +51,12 @@ export default class BaseManager {
         });
     });
   }
+
+  /**
+   *
+   * @param {Object} payload - its note object
+   * @returns boolean
+   */
   editNote(payload) {
     new Promise((resolve, reject) => {
       this.dbInstance
@@ -74,6 +93,12 @@ export default class BaseManager {
         });
     });
   }
+
+  /**
+   *
+   * @param {Object} payload - new note object
+   * @returns boolean
+   */
   addTable(payload) {
     new Promise((resolve, reject) => {
       this.dbInstance
@@ -107,6 +132,11 @@ export default class BaseManager {
     });
   }
 
+  /**
+   *
+   * @param {Object} payload -  deleted object
+   * @returns boolean
+   */
   deleteTable(payload) {
     new Promise((resolve, reject) => {
       this.dbInstance
@@ -140,6 +170,10 @@ export default class BaseManager {
     });
   }
 
+  /**
+   *
+   * @returns list of notes
+   */
   getTable() {
     return new Promise((resolve, reject) => {
       this.dbInstance

@@ -3,16 +3,29 @@ import {View, TextInput, Text, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import {editNote} from '../actions/action';
 import {notDetailStyles} from './styles/styles';
+
+/**
+ *
+ * @param {Object} props - include obhect and methods
+ * @returns
+ */
 const NoteDetail = props => {
   var [text, onChangeText] = React.useState(props.route.params.note.note);
   var note = props.route.params.note;
 
+  /**
+   *
+   * @param {String} value - note text
+   */
   const stateChangeText = value => {
     onChangeText(value);
     note.note = text;
   };
 
-  const updateNote = payload => {
+  /**
+   * update note
+   */
+  const updateNote = () => {
     props.editNote(note);
   };
 
@@ -35,6 +48,11 @@ const NoteDetail = props => {
   );
 };
 
+/**
+ *
+ * @param {Object} state - include state objects and methods
+ * @returns
+ */
 const mapStateToProps = state => {
   return {
     notes: state.notes,

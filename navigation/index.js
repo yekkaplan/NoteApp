@@ -7,7 +7,7 @@ const Stack = createStackNavigator();
 
 /**
  * for global navigation management.
- * @returns
+ * @returns  stack navigator object
  */
 function MyStack() {
   return (

@@ -1,3 +1,7 @@
+/**
+ *
+ * @returns current date
+ */
 const getCurrentDate = () => {
   var date = new Date().getDate();
   var month = new Date().getMonth() + 1;

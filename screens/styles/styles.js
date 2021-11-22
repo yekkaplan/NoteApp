@@ -1,8 +1,18 @@
 import {StyleSheet} from 'react-native';
-
 import {COLORS} from '../../constants';
 
 export const homeStyles = StyleSheet.create({
+  icon: {
+    width: 25,
+    height: 25,
+    tintColor: COLORS.backgraound,
+  },
+  logo: {
+    width: 64,
+    height: 64,
+    alignContent: 'center',
+  },
+  headline1: {fontSize: 20, color: COLORS.black, alignContent: 'center'},
   container: {
     flex: 1,
     paddingVertical: 4,
@@ -66,6 +76,11 @@ export const notDetailStyles = StyleSheet.create({
 });
 
 export const noteItemStyles = StyleSheet.create({
+  noteIcon: {
+    width: 16,
+    height: 16,
+    alignContent: 'center',
+  },
   container: {
     flex: 1,
     flexGrow: 1,

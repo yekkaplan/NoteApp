@@ -1,21 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {
-  homeStylesheet,
-  Text,
-  TouchableOpacity,
-  ToastAndroid,
-  View,
-  Image,
-} from 'react-native';
+import {Text, TouchableOpacity, ToastAndroid, View, Image} from 'react-native';
 import {getCurrentDate} from '../utils/utils';
 import Notes from './notes';
-import {COLORS, icons} from '../constants';
+import {icons} from '../constants';
 import Dialog from 'react-native-dialog';
 import {connect} from 'react-redux';
 import {addNote, getNote} from '../actions/action';
 import images from '../constants/images';
 import {homeStyles} from './styles/styles';
 
+/**
+ *
+ * @param {Object} props - include getNote function and object
+ * @returns
+ */
 const Home = props => {
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState();
@@ -25,17 +23,30 @@ const Home = props => {
     props.getNote();
   }, []);
 
+  /**
+   * this function show input alert
+   */
   const showInputAlert = () => {
     setVisible(true);
   };
 
+  /**
+   *  this function close alert
+   */
   const handleCancel = () => {
     setVisible(false);
   };
 
+  /**
+   *  this function show  toast messagel
+   */
   const showToast = () => {
     ToastAndroid.show('Alanlar boş olamaz.', ToastAndroid.SHORT);
   };
+
+  /**
+   *  this function added in state new note
+   */
   const handleAdd = () => {
     if (title != '' && note != '') {
       var newNote = {
@@ -64,18 +75,11 @@ const Home = props => {
             alignContent: 'center',
           }}
         />
-        <Text
-          style={{fontSize: 20, color: COLORS.black, alignContent: 'center'}}>
-          En Harika Notları Oluşturun!
-        </Text>
+        <Text style={homeStyles.headline1}>En Harika Notları Oluşturun!</Text>
         <Image
           source={images.logo}
           resizeMode="contain"
-          style={{
-            width: 64,
-            height: 64,
-            alignContent: 'center',
-          }}
+          style={homeStyles.logo}
         />
       </View>
       <Notes noteList={props.notes} />
@@ -83,11 +87,7 @@ const Home = props => {
         <Image
           source={icons.plus}
           resizeMode="contain"
-          style={{
-            width: 25,
-            height: 25,
-            tintColor: COLORS.backgraound,
-          }}
+          style={homeStyles.icon}
         />
       </TouchableOpacity>
 
@@ -115,6 +115,12 @@ const Home = props => {
     </View>
   );
 };
+
+/**
+ *
+ * @param {Object} state - include notes and methods
+ * @returns
+ */
 const mapStateToProps = state => {
   return {
     notes: state.notes,
